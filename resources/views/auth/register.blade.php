@@ -13,7 +13,7 @@
         </div>
 
         <div class="w-full bg-white rounded-lg shadow-lg p-8">
-            <form action="{{ route('register') }}" method="POST" class="flex flex-col gap-5">
+            <form action="{{ route('register') }}" method="POST" novalidate class="flex flex-col gap-5">
                 @csrf
                 <!-- Nombres -->
                 <div class="flex flex-col gap-2">
