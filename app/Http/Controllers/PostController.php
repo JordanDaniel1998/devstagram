@@ -11,4 +11,9 @@ class PostController extends Controller
 
         return view('dashboard', ['user' => $user]);
     }
+
+    public function create(Request $request) {
+
+        return view('posts.create');
+    }
 }
