@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+    {{-- <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" /> --}}
+    @vite('resources/css/dropzone.css')
 @endpush
 
 @section('titulo')
@@ -12,13 +13,13 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
         <div>
             <form action="{{ route('imagenes.store') }}" method="POST" enctype="multipart/form-data" id="dropzone"
-                class="dropzone border-dashed border-2 w-full h-full rounded flex flex-col justify-center items-center">
+                class="dropzone border-dashed border-2 w-full h-full rounded flex flex-wrap justify-center items-center">
                 @csrf
             </form>
         </div>
 
         <div class="w-full bg-white rounded-lg shadow-lg p-8">
-            <form action="{{ route('register') }}" method="POST" novalidate class="flex flex-col gap-5">
+            <form action="{{ route('posts.store') }}" method="POST" novalidate class="flex flex-col gap-5">
                 @csrf
                 <!-- Titulo -->
                 <div class="flex flex-col gap-2">
@@ -55,6 +56,16 @@
                     @enderror
                 </div>
 
+                <!-- imagen -->
+                <div class="flex flex-col gap-2">
+                    <input type="hidden" name="imagen" value="{{ old('imagen') }}">
+                    @error('imagen')
+                        <span class="text-red-500 font-medium">
+                            {{ str_replace('imagen', 'imagen', $message) }}
+                        </span>
+                    @enderror
+                </div>
+
                 <!-- Button Craer -->
                 <input type="submit" value="Crear Publicación"
                     class="bg-sky-600 hover:bg-sky-700 transition-colors cursor-pointer uppercase font-bold w-full p-3 text-white rounded-lg">
@@ -62,3 +73,8 @@
         </div>
     </div>
 @endsection
+
+
+@push('scripts')
+    @vite('resources/js/dropzone.js')
+@endpush

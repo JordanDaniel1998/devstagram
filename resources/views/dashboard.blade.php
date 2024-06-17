@@ -5,7 +5,7 @@
 @endsection
 
 @section('contenido')
-    <div class="flex justify-center">
+    <section class="flex justify-center">
         <div class="w-full flex flex-col md:flex-row gap-10">
             <div class="w-full flex justify-center md:justify-end items-center">
                 <img src="{{ asset('svg/usuario.svg') }}" alt="user" class="w-44 md:w-96">
@@ -21,5 +21,25 @@
                 <p class="text-gray-800 text-sm font-bold">0 <span class="font-normal">Post</span> </p>
             </div>
         </div>
-    </div>
+    </section>
+
+    <section>
+        <h2 class="text-4xl text-center font-black my-10">Publicaciones</h2>
+
+        @if ($posts->count())
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                @foreach ($posts as $post)
+                    <div>
+                        <a href=""><img src="{{ asset('uploads') . '/' . $post->imagen }}"
+                                alt="Imagen del post {{ $post->titulo }}"></a>
+                    </div>
+                @endforeach
+            </div>
+            <div>
+                {{ $posts->links() }}
+            </div>
+        @else
+            <p class="text-gray-600 uppercase text-sm text-center font-bold">No hay posts</p>
+        @endif
+    </section>
 @endsection
