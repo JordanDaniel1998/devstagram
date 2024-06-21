@@ -15,4 +15,9 @@ class Post extends Model
         // Un post solo le pertenece a un usuario
         return $this->belongsTo(User::class)->select(['name', 'username']);
     }
+
+    public function comentarios(){
+        // Un post tiene muchos comentarios
+        return $this->hasMany(Comentario::class)->orderBy('created_at', 'desc');;
+    }
 }

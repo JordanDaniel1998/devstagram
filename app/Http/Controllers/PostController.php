@@ -10,7 +10,7 @@ class PostController extends Controller
 {
     public function index(User $user)
     {
-        $posts = Post::where('user_id', $user->id)->paginate(5);
+        $posts = Post::where('user_id', $user->id)->paginate(1);
 
         return view('dashboard', ['user' => $user, 'posts' => $posts]);
     }
@@ -55,6 +55,22 @@ class PostController extends Controller
                 'user_id' => auth()->user()->id,
             ]);
 
-        return redirect()->route('posts.index', auth()->user()->username);
+        return redirect()->route('posts.error', auth()->user()->username);
+    }
+
+    public function show(User $user, Post $post)
+    {
+        if($user->id !== $post->user_id){
+            return redirect()->route('posts.index', auth()->user()->username);
+        }
+
+        return view('posts.show', [
+            'post' => $post,
+            'user' => $user
+        ]);
+    }
+
+    public function destroy(Post $post){
+
     }
 }

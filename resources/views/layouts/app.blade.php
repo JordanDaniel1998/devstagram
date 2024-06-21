@@ -5,6 +5,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- Permite agregar css en vistas especificas, también se puede agregar js  -->
     @stack('styles')
     @stack('scripts')
@@ -13,11 +20,11 @@
     @vite('resources/js/app.js')
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100 font-inter">
     <header class="border-b bg-white shadow">
         <div class="w-11/12 mx-auto flex justify-between items-center py-5">
             <h1 class="text-3xl font-black">DevStagram</h1>
-
+            <!-- Comprobar si el usuario actual está autenticado -->
             @auth
                 <nav class="flex gap-2 items-center">
                     <a href="{{ route('posts.create') }}"
@@ -41,6 +48,7 @@
                     </form>
                 </nav>
             @endauth
+
 
             @guest
                 <nav class="flex gap-2 items-center">

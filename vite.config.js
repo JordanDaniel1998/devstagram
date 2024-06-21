@@ -9,6 +9,7 @@ export default defineConfig({
                 "resources/css/dropzone.css",
                 "resources/js/app.js",
                 "resources/js/dropzone.js",
+                "resources/js/alert.js",
             ], */
             input: ["resources/css/app.css", "resources/js/app.js"],
             refresh: true,
