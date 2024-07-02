@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('comentarios', function (Blueprint $table) {
+        Schema::create('likes', function (Blueprint $table) {
             $table->id();
-            // Si se elimina un usuario se borra toda la información de ese usuario
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            // Si se elimina un post se borra toda la información de ese post
             $table->foreignId('post_id')->constrained()->onDelete('cascade');
-            $table->text('comentario');
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('comentarios');
+        Schema::dropIfExists('likes');
     }
 };

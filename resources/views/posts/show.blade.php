@@ -8,16 +8,40 @@
 
 @section('contenido')
     <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
-        <div class="flex flex-col gap-1">
+        <div class="flex flex-col gap-2">
             <img src="{{ asset('uploads') . '/' . $post->imagen }}" alt="{{ $post->titulo }}">
 
-            <div>
-                <p>
-                    0 likes
-                </p>
+            <div class="flex justify-start items-center gap-1">
+                @auth
+                    @if ($post->checkLike(auth()->user()))
+                        <form action="{{ route('posts.likes.destroy', $post) }}" method="POST" class="flex justify-center items-center">
+                            @method('DELETE')
+                            @csrf
+                            <button type="submit">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="red" viewBox="0 0 24 24" stroke-width="1.5"
+                                    stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                                </svg>
+                            </button>
+                        </form>
+                    @else
+                        <form action="{{ route('posts.likes.store', $post) }}" method="POST" class="flex justify-center items-center">
+                            @csrf
+                            <button type="submit">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5"
+                                    stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                                </svg>
+                            </button>
+                        </form>
+                    @endif
+                @endauth
+                <p class="font-bold">{{ $post->likes->count() }} <span class="font-normal">likes</span></p>
             </div>
 
-            <div>
+            <div class="flex flex-col gap-1">
                 <p class="font-bold">{{ $post->user->username }}</p>
                 <p class="text-sm text-gray-500">{{ $post->created_at->diffForHumans() }}</p>
                 <p class="">{{ $post->description }}</p>
@@ -26,13 +50,14 @@
             @auth
                 @if ($post->user_id === auth()->user()->id)
                     <div>
-                        <form action="">
+                        <form action="{{ route('posts.destroy', $post) }}" method="POST">
+                            @method('DELETE')
+                            @csrf
                             <input type="submit" value="Eliminar Publicación"
                                 class="bg-red-500 hover:bg-red-600 rounded text-white font-bold cursor-pointer py-2 px-5 md:duration-300">
                         </form>
                     </div>
                 @endif
-
             @endauth
         </div>
 
