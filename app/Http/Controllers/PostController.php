@@ -12,7 +12,9 @@ class PostController extends Controller
 {
     public function index(User $user)
     {
-        $posts = Post::where('user_id', $user->id)->paginate(1);
+        // $user -> Es el usuario que realiza alguna acción dentro de la página
+        // auth()->user -> Es el usuario que esta autenticado
+        $posts = Post::where('user_id', $user->id)->paginate(6);
 
         return view('dashboard', ['user' => $user, 'posts' => $posts]);
     }

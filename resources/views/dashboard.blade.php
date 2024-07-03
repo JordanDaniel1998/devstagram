@@ -8,7 +8,8 @@
     <section class="flex justify-center">
         <div class="w-full flex flex-col md:flex-row gap-10">
             <div class="w-full flex justify-center md:justify-end items-center">
-                <img src="{{ asset('svg/usuario.svg') }}" alt="user" class="w-44 md:w-96">
+                <img src="{{ $user->imagen ? asset('perfiles' . '/' . $user->imagen) : asset('svg/usuario.svg') }}"
+                    alt="user" class="w-44 md:w-96 rounded-full">
             </div>
 
             <div class="w-full flex flex-col gap-2 justify-center items-center md:items-start">
@@ -17,7 +18,8 @@
                     <p class="text-gray-700 text-2xl">{{ $user->username }}</p>
                     @auth
                         @if ($user->id === auth()->user()->id)
-                            <a href="{{ route('perfil.index') }}" class="text-gray-500 hover:text-gray-600 cursor-pointer md:duration-300">
+                            <a href="{{ route('perfil.index') }}"
+                                class="text-gray-500 hover:text-gray-600 cursor-pointer md:duration-300">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                     stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -28,11 +30,34 @@
                     @endauth
                 </div>
 
-                <p class="text-gray-800 text-sm font-bold">0 <span class="font-normal">Seguidores</span> </p>
+                <p class="text-gray-800 text-sm font-bold">{{ $user->followers->count() }} <span class="font-normal">@choice('Seguidor|Seguidores', $user->followers->count())</span> </p>
 
-                <p class="text-gray-800 text-sm font-bold">0 <span class="font-normal">Siguiendo</span> </p>
+                <p class="text-gray-800 text-sm font-bold">{{ $user->followings->count() }} <span class="font-normal">Siguiendo</span> </p>
 
-                <p class="text-gray-800 text-sm font-bold">0 <span class="font-normal">Post</span> </p>
+                <p class="text-gray-800 text-sm font-bold">{{ $user->posts->count() }} <span class="font-normal">Post</span>
+                </p>
+
+                @auth
+                    @if ($user->id !== auth()->user()->id)
+                        @if ($user->checkFollower(auth()->user()))
+                            <form action="{{ route('users.unfollow', $user) }}" method="POST">
+                                <!-- Metodo spoofing en laravel nos permite agregar otros verbos cuando enviamos informacion -->
+                                @method('DELETE')
+                                @csrf
+                                <input type="submit"
+                                    class="bg-red-600 text-white uppercase rounded-lg px-3 py-1 text-xs font-bold cursor-pointer"
+                                    value="Dejar de Seguir" />
+                            </form>
+                        @else
+                            <form action="{{ route('users.follow', $user) }}" method="POST">
+                                @csrf
+                                <input type="submit"
+                                    class="bg-blue-600 text-white uppercase rounded-lg px-3 py-1 text-xs font-bold cursor-pointer"
+                                    value="Seguir" />
+                            </form>
+                        @endif
+                    @endif
+                @endauth
             </div>
         </div>
     </section>
