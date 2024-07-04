@@ -14,7 +14,8 @@ class PostController extends Controller
     {
         // $user -> Es el usuario que realiza alguna acción dentro de la página
         // auth()->user -> Es el usuario que esta autenticado
-        $posts = Post::where('user_id', $user->id)->paginate(6);
+        // latest() - > Ordena desde el post mas actual (ultimo post publicado) hacia el mas antiguo
+        $posts = Post::where('user_id', $user->id)->latest()->paginate(6);
 
         return view('dashboard', ['user' => $user, 'posts' => $posts]);
     }

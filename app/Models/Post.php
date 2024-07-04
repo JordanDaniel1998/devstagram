@@ -19,7 +19,7 @@ class Post extends Model
 
     public function comentarios(){
         // Un post tiene muchos comentarios
-        return $this->hasMany(Comentario::class)->orderBy('created_at', 'desc');;
+        return $this->hasMany(Comentario::class)->orderBy('created_at', 'desc');
     }
 
     public function likes(){
@@ -30,5 +30,6 @@ class Post extends Model
     public function checkLike(User $user){
         // likes -> Hace referencia a la información del modelo asociado
         return $this->likes->contains('user_id', $user->id);
+       /* return $this->likes()->where('user_id', $user->id)->exists(); */
     }
 }

@@ -48,7 +48,7 @@ class User extends Authenticatable
 
     public function posts(){
         // Un usuario puede tener muchos post
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Post::class)->orderBy('created_at', 'desc');
     }
 
     public function likes(){
@@ -66,7 +66,7 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'followers', 'user_id', 'follower_id')->withTimestamps();;
     }
 
-    // Almacenas los que seguimos
+    // Almacenas a los que seguimos
     public function followings(){
         return $this->belongsToMany(User::class, 'followers', 'follower_id', 'user_id')->withTimestamps();;
     }

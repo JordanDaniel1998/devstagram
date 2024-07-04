@@ -18,12 +18,15 @@
     <title>DevStagram - @yield('titulo')</title>
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
+    @livewireStyles
 </head>
 
 <body class="bg-gray-100 font-inter">
     <header class="border-b bg-white shadow">
         <div class="w-11/12 mx-auto flex justify-between items-center py-5">
-            <h1 class="text-3xl font-black">DevStagram</h1>
+            <h1 class="text-3xl font-black">
+                <a href="{{ route('home') }}">DevStagram</a>
+            </h1>
             <!-- Comprobar si el usuario actual está autenticado -->
             @auth
                 <nav class="flex gap-2 items-center">
@@ -68,6 +71,7 @@
         <p>DevStagram - Todos los derechos reservados {{ now()->year }} </p>
     </footer>
 
+    @livewireScripts
 </body>
 
 </html>

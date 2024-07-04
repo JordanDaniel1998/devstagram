@@ -30,9 +30,11 @@
                     @endauth
                 </div>
 
-                <p class="text-gray-800 text-sm font-bold">{{ $user->followers->count() }} <span class="font-normal">@choice('Seguidor|Seguidores', $user->followers->count())</span> </p>
+                <p class="text-gray-800 text-sm font-bold">{{ $user->followers->count() }} <span
+                        class="font-normal">@choice('Seguidor|Seguidores', $user->followers->count())</span> </p>
 
-                <p class="text-gray-800 text-sm font-bold">{{ $user->followings->count() }} <span class="font-normal">Siguiendo</span> </p>
+                <p class="text-gray-800 text-sm font-bold">{{ $user->followings->count() }} <span
+                        class="font-normal">Siguiendo</span> </p>
 
                 <p class="text-gray-800 text-sm font-bold">{{ $user->posts->count() }} <span class="font-normal">Post</span>
                 </p>
@@ -64,22 +66,6 @@
 
     <section>
         <h2 class="text-4xl text-center font-black my-10">Publicaciones</h2>
-
-        @if ($posts->count())
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                @foreach ($posts as $post)
-                    <div>
-                        <a href="{{ route('posts.show', ['post' => $post, 'user' => $user]) }}"><img
-                                src="{{ asset('uploads') . '/' . $post->imagen }}"
-                                alt="Imagen del post {{ $post->titulo }}"></a>
-                    </div>
-                @endforeach
-            </div>
-            <div>
-                {{ $posts->links() }}
-            </div>
-        @else
-            <p class="text-gray-600 uppercase text-sm text-center font-bold">No hay posts</p>
-        @endif
+        <x-listar-post :posts="$posts" />
     </section>
 @endsection
