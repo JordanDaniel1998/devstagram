@@ -25,7 +25,7 @@ class ImagenController extends Controller
         $imagenServidor->cover(1000, 1000);
 
         if (!File::isDirectory(public_path('uploads'))) {
-            File::makeDirectory(public_path('uploads'), 0644);
+            File::makeDirectory(public_path('uploads'), 0777);
         }
 
         $imagenesPath = public_path('uploads') . '/' . $nombreImagen;
