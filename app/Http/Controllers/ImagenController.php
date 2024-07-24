@@ -19,6 +19,15 @@ class ImagenController extends Controller
         //generar un id unico para las imagenes
         $nombreImagen = Str::uuid() . '.' . $imagen->extension();
 
+
+
+
+
+
+
+
+
+
         //guardar la imagen al servidor
         $imagenServidor = $manager->read($imagen);
         //agregamos efecto a la imagen con intervention
